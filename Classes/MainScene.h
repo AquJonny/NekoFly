@@ -5,7 +5,21 @@
 
 class MainScene : public cocos2d::Layer
 {
+protected:
+
+	MainScene();
+	
+	virtual ~MainScene();
+	
+	bool init() override;
+
 public:
+
+	static cocos2d::Scene* createScene();
+
+	void update(float dt) override;
+
+	CREATE_FUNC(MainScene);
 
 };
 
