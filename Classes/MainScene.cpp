@@ -4,54 +4,54 @@ USING_NS_CC;
 
 #define __PJ_DEBUG__
 
-//ÖØÁ¦²ÎÊı ¡ù(0,-3)ÊÇÊ²Ã´ÒâË¼??
+//é‡åŠ›å‚æ•° â€»(0,-3)æ˜¯ä»€ä¹ˆæ„æ€??
 const Vec2 PHYSICS_ENGINE_GRAVITY = Vec2(0, -3);
 
-//ËÙ¶È²ÎÊı ¡ù6.0ÊÇÊ²Ã´ÒâË¼??
+//é€Ÿåº¦å‚æ•° â€»6.0æ˜¯ä»€ä¹ˆæ„æ€??
 const float PHYSICS_ENGINE_SPEED = 6.0;
 
-//¹¹Ôìº¯Êı
+//æ„é€ å‡½æ•°
 MainScene::MainScene()
 {
-	
+    
 }
 
-//Îö¹¹º¯Êı
+//ææ„å‡½æ•°
 MainScene::~MainScene()
 {
-	
+    
 }
 
-//Createº¯Êı
+//Createå‡½æ•°
 Scene* MainScene::createScene()
 {
-	auto scene = Scene::createWithPhysics();
-	auto world = scene->getPysicsWorld();
-	world->setGravity( PHYSICS_ENGINE_GRAVITY );
-	world->setSpeed( PHYSICS_ENGINE_SPEED );
-	
+    auto scene = Scene::createWithPhysics();
+    auto world = scene->getPhysicsWorld();
+    world->setGravity( PHYSICS_ENGINE_GRAVITY );
+    world->setSpeed( PHYSICS_ENGINE_SPEED );
+    
 #ifdef __PJ_DEBUG__
-
-	world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
+    
+    world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    
 #endif
-	
-	auto layer = MainScene::create();
-	
-	scene->addChild(layer);
-	
-	return scene;
+    
+    auto layer = MainScene::create();
+    
+    scene->addChild(layer);
+    
+    return scene;
 }
 
-//³õÆÚ»¯º¯Êı
+//åˆæœŸåŒ–å‡½æ•°
 bool MainScene::init()
 {
-	
+    
 }
 
-//Updataº¯Êı
+//Updataå‡½æ•°
 void MainScene::update(float dt)
 {
-	
+    
 }
 

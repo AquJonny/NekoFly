@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-//¶¨ÒåÆÁÄ»·Ö±æÂÊÀàÐÍ ºáÆÁ or ÊúÆÁ
+//å®šä¹‰å±å¹•åˆ†è¾¨çŽ‡ç±»åž‹ æ¨ªå± or ç«–å±
 #define Landscape
 
 #ifdef Landscape
@@ -11,25 +11,25 @@ USING_NS_CC;
 //Landscape
 //default=Retina
 
-static cocos2d::Size iPhon4DesignSize = cocos2d::Size(480, 320);		//3 : 2 320 ÏñËØ x 480 ÏñËØ Point(320*480)
-static cocos2d::Size iPhon5DesignSize = cocos2d::Size(568, 320);		//16: 9 640 ÏñËØ x 1136ÏñËØ Point(320*568)
-static cocos2d::Size iPhon6DesignSize = cocos2d::Size(736, 414);		//16: 9 1080ÏñËØ x 1920ÏñËØ Point(375*667,414*736)
+static cocos2d::Size iPhon4DesignSize = cocos2d::Size(480, 320);		//3 : 2 320 åƒç´  x 480 åƒç´  Point(320*480)
+static cocos2d::Size iPhon5DesignSize = cocos2d::Size(568, 320);		//16: 9 640 åƒç´  x 1136åƒç´  Point(320*568)
+static cocos2d::Size iPhon6DesignSize = cocos2d::Size(736, 414);		//16: 9 1080åƒç´  x 1920åƒç´  Point(375*667,414*736)
 
-static cocos2d::Size iPhon4FrameSize = cocos2d::Size(480, 320);			//3 : 2 320 ÏñËØ x 480 ÏñËØ Point(320*480)
-static cocos2d::Size iPhon5FrameSize = cocos2d::Size(1136, 640);		//16: 9 640 ÏñËØ x 1136ÏñËØ Point(320*568)
-static cocos2d::Size iPhon6FrameSize = cocos2d::Size(1920, 1080);		//16: 9 1080ÏñËØ x 1920ÏñËØ Point(375*667,414*736)
+static cocos2d::Size iPhon4FrameSize = cocos2d::Size(960, 640);			//3 : 2 320 åƒç´  x 480 åƒç´  Point(320*480)
+static cocos2d::Size iPhon5FrameSize = cocos2d::Size(1136, 640);		//16: 9 640 åƒç´  x 1136åƒç´  Point(320*568)
+static cocos2d::Size iPhon6FrameSize = cocos2d::Size(1920, 1080);		//16: 9 1080åƒç´  x 1920åƒç´  Point(375*667,414*736)
 #else //if (ResolutionType == Portait)
 
 //Portait
 //default=Retina
 
-static cocos2d::Size iPhon4DesignSize = cocos2d::Size(480, 320);		//3 : 2 320 ÏñËØ x 480 ÏñËØ Point(320*480)
-static cocos2d::Size iPhon5DesignSize = cocos2d::Size(568, 320);		//16: 9 640 ÏñËØ x 1136ÏñËØ Point(320*568)
-static cocos2d::Size iPhon6DesignSize = cocos2d::Size(736, 414);		//16: 9 1080ÏñËØ x 1920ÏñËØ Point(375*667,414*736)
+static cocos2d::Size iPhon4DesignSize = cocos2d::Size(320, 480);		//3 : 2 320 åƒç´  x 480 åƒç´  Point(320*480)
+static cocos2d::Size iPhon5DesignSize = cocos2d::Size(320, 568);		//16: 9 640 åƒç´  x 1136åƒç´  Point(320*568)
+static cocos2d::Size iPhon6DesignSize = cocos2d::Size(414, 736);		//16: 9 1080åƒç´  x 1920åƒç´  Point(375*667,414*736)
 
-static cocos2d::Size iPhon4FrameSize = cocos2d::Size(320, 480);			//3 : 2 320 ÏñËØ x 480 ÏñËØ Point(320*480)
-static cocos2d::Size iPhon5FrameSize = cocos2d::Size(640, 1136);		//16: 9 640 ÏñËØ x 1136ÏñËØ Point(320*568)
-static cocos2d::Size iPhon6FrameSize = cocos2d::Size(1080, 1920);		//16: 9 1080ÏñËØ x 1920ÏñËØ Point(375*667,414*736)
+static cocos2d::Size iPhon4FrameSize = cocos2d::Size(640, 960);			//3 : 2 320 åƒç´  x 480 åƒç´  Point(320*480)
+static cocos2d::Size iPhon5FrameSize = cocos2d::Size(640, 1136);		//16: 9 640 åƒç´  x 1136åƒç´  Point(320*568)
+static cocos2d::Size iPhon6FrameSize = cocos2d::Size(1080, 1920);		//16: 9 1080åƒç´  x 1920åƒç´  Point(375*667,414*736)
 #endif
 
 
@@ -38,7 +38,7 @@ AppDelegate::AppDelegate()
 {
 }
 
-AppDelegate::~AppDelegate() 
+AppDelegate::~AppDelegate()
 {
 }
 
@@ -48,11 +48,11 @@ void AppDelegate::initGLContextAttrs()
 {
     // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
-
+    
     GLView::setGLContextAttrs(glContextAttrs);
 }
 
-// if you want to use the package manager to install more packages,  
+// if you want to use the package manager to install more packages,
 // don't modify or remove this function
 static int register_all_packages()
 {
@@ -64,46 +64,46 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-		//µçÄÔ¶ËÔËÐÐÊ±ºòÐèÒª´´½¨ÓÎÏ·´°¿Ú.µÚ¶þ¸ö²ÎÊý¾ÍÊÇÓÎÏ·´°¿ÚÎ»ÖÃÓë´óÐ¡
+        //ç”µè„‘ç«¯è¿è¡Œæ—¶å€™éœ€è¦åˆ›å»ºæ¸¸æˆçª—å£.ç¬¬äºŒä¸ªå‚æ•°å°±æ˜¯æ¸¸æˆçª—å£ä½ç½®ä¸Žå¤§å°
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("MyCppGame", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
-		//ÒÆ¶¯¶ËÔËÐÐÊ±ºòÄ¬ÈÏÓÎÏ·´°¿Ú¾ÍÊÇÉè±¸ÏÔÊ¾´óÐ¡£¬ËùÒÔ²»ÐèÒªÁíÍâÉèÖÃ´°¿Ú´óÐ¡
+        //ç§»åŠ¨ç«¯è¿è¡Œæ—¶å€™é»˜è®¤æ¸¸æˆçª—å£å°±æ˜¯è®¾å¤‡æ˜¾ç¤ºå¤§å°ï¼Œæ‰€ä»¥ä¸éœ€è¦å¦å¤–è®¾ç½®çª—å£å¤§å°
         glview = GLViewImpl::create("MyCppGame");
 #endif
         director->setOpenGLView(glview);
     }
-
+    
     // turn on display FPS
     director->setDisplayStats(false);
-
+    
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
-
+    
     // Set the design resolution
     //glview->setDesignResolutionSize(designResolutionSize.width,
     //								designResolutionSize.height,
     //								ResolutionPolicy::NO_BORDER);
-	
-	//È¡µÃÉè±¸µÄÀàÐÍ ¡ùÀ´Ô´CCPlatformConfig.h
-	//CC_TARGET_PLATFORM
-	//#define CC_PLATFORM_UNKNOWN            0
-	//#define CC_PLATFORM_IOS                1 ¡ùiPhone
-	//#define CC_PLATFORM_ANDROID            2
-	//#define CC_PLATFORM_WIN32              3
-	//#define CC_PLATFORM_MARMALADE          4
-	//#define CC_PLATFORM_LINUX              5
-	//#define CC_PLATFORM_BADA               6
-	//#define CC_PLATFORM_BLACKBERRY         7
-	//#define CC_PLATFORM_MAC                8
-	//#define CC_PLATFORM_NACL               9
-	//#define CC_PLATFORM_EMSCRIPTEN        10
-	//#define CC_PLATFORM_TIZEN             11
-	//#define CC_PLATFORM_QT5               12
-	//#define CC_PLATFORM_WINRT             13
-
-	//È¡µÃÉè±¸µÄÀàÐÍÓëCC_TARGET_PLATFORMÍ¬ÑùÐ§¹û ¡ùÀ´Ô´CCApplicationProtocol.h
-	auto platform = Appliction::getInstance()->getTargetPlantform();
+    
+    //å–å¾—è®¾å¤‡çš„ç±»åž‹ â€»æ¥æºCCPlatformConfig.h
+    //CC_TARGET_PLATFORM
+    //#define CC_PLATFORM_UNKNOWN            0
+    //#define CC_PLATFORM_IOS                1 â€»iPhone
+    //#define CC_PLATFORM_ANDROID            2
+    //#define CC_PLATFORM_WIN32              3
+    //#define CC_PLATFORM_MARMALADE          4
+    //#define CC_PLATFORM_LINUX              5
+    //#define CC_PLATFORM_BADA               6
+    //#define CC_PLATFORM_BLACKBERRY         7
+    //#define CC_PLATFORM_MAC                8
+    //#define CC_PLATFORM_NACL               9
+    //#define CC_PLATFORM_EMSCRIPTEN        10
+    //#define CC_PLATFORM_TIZEN             11
+    //#define CC_PLATFORM_QT5               12
+    //#define CC_PLATFORM_WINRT             13
+    
+    //å–å¾—è®¾å¤‡çš„ç±»åž‹ä¸ŽCC_TARGET_PLATFORMåŒæ ·æ•ˆæžœ â€»æ¥æºCCApplicationProtocol.h
+    auto platform = Application::getInstance()->getTargetPlatform();
     //enum class Platform
     //{
     //    OS_WINDOWS,     /**< Windows */
@@ -118,163 +118,162 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //    OS_TIZEN,       /**< Tizen */
     //    OS_WINRT,       /**< Windows Runtime Applications */
     //    OS_WP8          /**< Windows Phone 8 Applications */
-	//};
-
-	//Éè±¸±ðµÄÆÁÄ»ÊÊÅäÎÊÌâ:
-	//¶ÔÓÚcocos2dxÖÐµÄÏÔÊ¾³ß´ç,ÓÐ4¸ö(or¸ü¶à?)Ïà¹ØÊý¾Ý
-	//×ÊÔ´³ß´ç(ResourceSize):
-	//ÀýÈç±³¾°Í¼µÄ·Ö±æÂÊ,ÌùÍ¼µÄ·Ö±æÂÊ ¡ù¸ù¾Ý×Ô¼ºµÄResourceÉèÖÃ
-	//
-	//Éè¼Æ³ß´ç(DesignSize / WinSize):
-	//Éè¼ÆµÄÏÔÊ¾´°¿ÚµÄ·Ö±æÂÊ          ¡ù×Ô¼ºÉè¶¨,Ò»°ãÓëResource,Éè±¸·Ö±æÂÊ,Éè±¸ÏÔÊ¾±ÈÀýÓÐ¹Ø¡ï
-	//                                           Éè¶¨ºó,¸ù¾ÝÕâ¸öÊýÖµ´´½¨ÓÎÏ·ÄÚ×ø±êÏµ¡ï
-	//
-	//Éè±¸³ß´ç(FrameSize):
-	//ÎÞ·¨±ä¸ü£¬¸ù¾ÝÊµ¼ÊÉè±¸µÄ²ÎÊý¾ö¶¨,Í¨¹ýglview->getFrameSize()·½·¨»ñµÃ
-	//
-	//×ÊÔ´ÓëÉè¼Æ³ß´çÖ®¼äµÄËõ·Å:
-	//Í¨¹ýdirector->setContentScaleFactor(float x)·½·¨Éè¶¨
-	//director->setContentScaleFactor(MIN(×ÊÔ´.height/Éè¼Æ.height, ×ÊÔ´.width/Éè¼Æ.width))
-	//¡ü³£ÓÃÉè¶¨·½·¨
-	//Éè¼ÆºÍÉè±¸³ß´çÖ®¼äµÄËõ·Å:
-	//Í¨¹ýglview->setDesignResolutionSize(float x,float y,ResolutionPolicy)·½·¨Éè¶¨
-	//glview->setDesignResolutionSize(Éè¼Æ.width, Éè¼Æ.height, Ìî³ä·½Ê½)
-	//¡ü³£ÓÃÉè¶¨·½·¨
-	//¹ØÓÚÌî³ä·½Ê½:
-	//1£©EXACT_FIT Õû¸öÓÎÏ·ÄÚÈÝ¶¼»áÔÚÆÁÄ»ÄÚ¿É¼û£¬²¢ÇÒ²»ÓÃÌá¹©±ÈÀýÏµÊý¡£x,y»á±»À­Éì£¬Ê¹ÄÚÈÝÆÌÂúÆÁÄ»£¬ËùÒÔ¿ÉÄÜ»á³öÏÖÐÎ±ä£¬ËùÓÐµÄÓ¦ÓÃ³ÌÐò¿´ÆðÀ´¿ÉÄÜ»áÊÇÀ­Éì»òÕßÑ¹ËõµÄ¡£
-	//2£©NO_BORDER Ò»¸ö·½ÏòÆÌÂúÆÁÄ»£¬ÁíÍâÒ»¸ö·½Ïò³¬³öÆÁÄ»£¬²»»á±äÐÎ£¬µ«ÊÇ¿ÉÄÜÓÐÒ»Ð©²Ã¼ô¡£
-	//3£©SHOW_ALL ¸ÃÄ£Ê½»á¾¡¿ÉÄÜ°´Ô­Ê¼¿í¸ß±È·Å´óÓÎÏ·ÊÀ½ç£¬Í¬Ê±Ê¹µÃÓÎÏ·ÄÚÈÝÈ«²¿¿É¼û¡£ÄÚÈÝ²»»áÐÎ±ä£¬²»¹ý¿ÉÄÜ»á³öÏÖÁ½ÌõºÚ±ß£¬¼´ÆÁÄ»ÖÐ»áÓÐÁô°×¡£
-	//4£©FIXED_WIDTH ¸ÃÄ£Ê½»áºáÏò·Å´óÓÎÏ·ÊÀ½çÄÚµÄÄÚÈÝÒÔÊÊÓ¦ÆÁÄ»µÄ¿í¶È£¬×ÝÏò°´Ô­Ê¼¿í¸ß±È·Å´ó¡£
-	//5£©FIXED_HEIGHT ÓëÉÏÒ»ÖÐÄ£Ê½Ïà·´¡£
-	//
-	//»ù±¾µÄÉè¼ÆË¼Â·
-	//1.È·¶¨Éè±¸µÄÊµ¼Ê³ß´ç¡ú»ñµÃÉè±¸µÄÏÔÊ¾±È(4:3?16:9)
-	//2.¸ù¾ÝÉè±¸µÄÏÔÊ¾±ÈÀýÉè¼ÆÏàÓ¦µÄÉè¼Æ³ß´ç
-	//3.¸ù¾ÝÉè¼Æ³ß´ç(ÏÔÊ¾±È)×¼±¸ÏàÓ¦µÄResource
-	//¡ùÓÉÓÚ¸ßÇåºÍ·Ç¸ßÇåµÄÇø±ð,¿ÉÄÜÐèÒª×¼±¸2Ì××ÊÔ´·Ö±ð¶ÔÓ¦
-	//¡ùÊ¹ÓÃ·Ç¸ßÇåµÄ×ÊÔ´¿ÉÒÔ½ÚÔ¼ÄÚ´æ¿Õ¼äµÄÊ¹ÓÃ.
-	//
-	//¿ÎÌâ:
-	//ÈçºÎÍ¨¹ýÊµ¼Ê³ß´ç»ñµÃÏÔÊ¾±È²¢ÇÒÉè¼ÆÉè¼Æ³ß´ç
-	//
-	//iOS Éè±¸ÏÖÓÐµÄ·Ö±æÂÊÈçÏÂ£º
-	//iPhone/iPod Touch
-	//3 :2 ÆÕÍ¨   ÆÁ 320 ÏñËØ x 480 ÏñËØ Point(320*480)iPhone 1¡¢3G¡¢3GS£¬iPod Touch 1¡¢2¡¢3
-	//3 :2 Retina ÆÁ 640 ÏñËØ x 960 ÏñËØ Point(320*480)iPhone 4¡¢4S£¬iPod Touch 4
-	//16:9 Retina ÆÁ 640 ÏñËØ x 1136ÏñËØ Point(320*568)iPhone 5¡¢5s¡¢SE£¬iPod Touch 5
-	//16:9 Retina ÆÁ 750 ÏñËØ x 1334ÏñËØ Point(320*568,375*667)iPhone 6
-	//16:9 Retina ÆÁ 1080ÏñËØ x 1920ÏñËØ Point(375*667,414*736)iPhone 6
-	//
-	//iPad
-	//4 :3 Retina ÆÁ 1536ÏñËØ x 2048ÏñËØ Point(768*1024)iPad£¬iPad mini£¬iPad air
-	//4 :3 Retina ÆÁ 2048ÏñËØ x 2732ÏñËØ Point(1024*1366)iPad Pro
-	//
-	//ÎªÁË·½±ã¿ª·¢ÈËÔ±¿ª·¢£¬iOS ÖÐÍ³Ò»Ê¹ÓÃµã£¨Point£©¶Ô½çÃæÔªËØµÄ´óÐ¡½øÐÐÃèÊö¡£
-	//µã¸úÏñËØµÄ»»Ëã¹ØÏµÈçÏÂ£º
-	//ÆÕÍ¨   ÆÁ 1µã = 1ÏñËØ 
-	//Retina ÆÁ 1µã = 2ÏñËØ 
-	//
-	//¶øÔÚ iPhone 5 ¸ú iPod Touch 5 µÄ»úÆ÷ÉÏ£¬¶ÔÓÚ¿ª·¢ÕßÀ´Ëµ£¬
-	//ËüµÄ½çÃæ´óÐ¡¾ÍÊÇ 320 x 568µã£¬ÄãÖ»Ðè¸ù¾ÝÕâ¸ö´óÐ¡È¥µ÷ÕûÄãµÄ½çÃæ¡£
-	//±ÈÈç£ºÎÒÓÐÒ»¸ö°´Å¥£¬Òª·ÅÔÚÆÁÄ»ÖÐ¼äµÄÎ»ÖÃ£¬
-	//ÄÇÃ´ÔÚ½çÃæ´óÐ¡Îª 320 x 480µã µÄÉè±¸ÉÏ£¬Ö»ÐèÉèÖÃËüµÄ center Îª (320/2, 480/2) Î»ÖÃ¼´¿É£¬
-	//ÔÚ 3£º2 Retina ÆÁÉÏÏµÍ³Õâ¸ö°´Å¥Ò²¿ÉÒÔÕýÈ·µÄÏÔÊ¾ÔÚÖÐ¼ä£»
-	//¶øÔÚÆÁÄ»´óÐ¡Îª 320 x 568µã µÄÉè±¸ÉÏ£¬Äã¾ÍÉèÖÃËüµÄ center Îª (320/2, 568/2)¡£
-	//
-	//https://designcode.io/iosdesign-guidelines
-	//https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
-	
-	auto frameSize = glview->getFrameSize();
-
-	//´´½¨ÎÄ¼þ¼ìË÷ÓÃÎÄ¼þ¼ÐÁÐ±í
-	std::vector<std::string> serchResolutionOrder;
-
-	switch( platform )
-	{
-		case Platform::OS_IPHONE:
-		case Platform::OS_IPAD:
-			//¸ù¾Ý·Ö±æÂÊ(¸ß¿í±È)Éè¶¨DesignSize(WinSize)
-			//¸ù¾Ý·Ö±æÂÊ(¸ß¿í±È)Éè¶¨Ê¹ÓÃµÄ×ÊÔ´Â·¾¶RetinaÓëNonRetina
+    //};
+    
+    //è®¾å¤‡åˆ«çš„å±å¹•é€‚é…é—®é¢˜:
+    //å¯¹äºŽcocos2dxä¸­çš„æ˜¾ç¤ºå°ºå¯¸,æœ‰4ä¸ª(oræ›´å¤š?)ç›¸å…³æ•°æ®
+    //èµ„æºå°ºå¯¸(ResourceSize):
+    //ä¾‹å¦‚èƒŒæ™¯å›¾çš„åˆ†è¾¨çŽ‡,è´´å›¾çš„åˆ†è¾¨çŽ‡ â€»æ ¹æ®è‡ªå·±çš„Resourceè®¾ç½®
+    //
+    //è®¾è®¡å°ºå¯¸(DesignSize / WinSize):
+    //è®¾è®¡çš„æ˜¾ç¤ºçª—å£çš„åˆ†è¾¨çŽ‡          â€»è‡ªå·±è®¾å®š,ä¸€èˆ¬ä¸ŽResource,è®¾å¤‡åˆ†è¾¨çŽ‡,è®¾å¤‡æ˜¾ç¤ºæ¯”ä¾‹æœ‰å…³â˜…
+    //                                           è®¾å®šåŽ,æ ¹æ®è¿™ä¸ªæ•°å€¼åˆ›å»ºæ¸¸æˆå†…åæ ‡ç³»â˜…
+    //
+    //è®¾å¤‡å°ºå¯¸(FrameSize):
+    //æ— æ³•å˜æ›´ï¼Œæ ¹æ®å®žé™…è®¾å¤‡çš„å‚æ•°å†³å®š,é€šè¿‡glview->getFrameSize()æ–¹æ³•èŽ·å¾—
+    //
+    //èµ„æºä¸Žè®¾è®¡å°ºå¯¸ä¹‹é—´çš„ç¼©æ”¾:
+    //é€šè¿‡director->setContentScaleFactor(float x)æ–¹æ³•è®¾å®š
+    //director->setContentScaleFactor(MIN(èµ„æº.height/è®¾è®¡.height, èµ„æº.width/è®¾è®¡.width))
+    //â†‘å¸¸ç”¨è®¾å®šæ–¹æ³•
+    //è®¾è®¡å’Œè®¾å¤‡å°ºå¯¸ä¹‹é—´çš„ç¼©æ”¾:
+    //é€šè¿‡glview->setDesignResolutionSize(float x,float y,ResolutionPolicy)æ–¹æ³•è®¾å®š
+    //glview->setDesignResolutionSize(è®¾è®¡.width, è®¾è®¡.height, å¡«å……æ–¹å¼)
+    //â†‘å¸¸ç”¨è®¾å®šæ–¹æ³•
+    //å…³äºŽå¡«å……æ–¹å¼:
+    //1ï¼‰EXACT_FIT æ•´ä¸ªæ¸¸æˆå†…å®¹éƒ½ä¼šåœ¨å±å¹•å†…å¯è§ï¼Œå¹¶ä¸”ä¸ç”¨æä¾›æ¯”ä¾‹ç³»æ•°ã€‚x,yä¼šè¢«æ‹‰ä¼¸ï¼Œä½¿å†…å®¹é“ºæ»¡å±å¹•ï¼Œæ‰€ä»¥å¯èƒ½ä¼šå‡ºçŽ°å½¢å˜ï¼Œæ‰€æœ‰çš„åº”ç”¨ç¨‹åºçœ‹èµ·æ¥å¯èƒ½ä¼šæ˜¯æ‹‰ä¼¸æˆ–è€…åŽ‹ç¼©çš„ã€‚
+    //2ï¼‰NO_BORDER ä¸€ä¸ªæ–¹å‘é“ºæ»¡å±å¹•ï¼Œå¦å¤–ä¸€ä¸ªæ–¹å‘è¶…å‡ºå±å¹•ï¼Œä¸ä¼šå˜å½¢ï¼Œä½†æ˜¯å¯èƒ½æœ‰ä¸€äº›è£å‰ªã€‚
+    //3ï¼‰SHOW_ALL è¯¥æ¨¡å¼ä¼šå°½å¯èƒ½æŒ‰åŽŸå§‹å®½é«˜æ¯”æ”¾å¤§æ¸¸æˆä¸–ç•Œï¼ŒåŒæ—¶ä½¿å¾—æ¸¸æˆå†…å®¹å…¨éƒ¨å¯è§ã€‚å†…å®¹ä¸ä¼šå½¢å˜ï¼Œä¸è¿‡å¯èƒ½ä¼šå‡ºçŽ°ä¸¤æ¡é»‘è¾¹ï¼Œå³å±å¹•ä¸­ä¼šæœ‰ç•™ç™½ã€‚
+    //4ï¼‰FIXED_WIDTH è¯¥æ¨¡å¼ä¼šæ¨ªå‘æ”¾å¤§æ¸¸æˆä¸–ç•Œå†…çš„å†…å®¹ä»¥é€‚åº”å±å¹•çš„å®½åº¦ï¼Œçºµå‘æŒ‰åŽŸå§‹å®½é«˜æ¯”æ”¾å¤§ã€‚
+    //5ï¼‰FIXED_HEIGHT ä¸Žä¸Šä¸€ä¸­æ¨¡å¼ç›¸åã€‚
+    //
+    //åŸºæœ¬çš„è®¾è®¡æ€è·¯
+    //1.ç¡®å®šè®¾å¤‡çš„å®žé™…å°ºå¯¸â†’èŽ·å¾—è®¾å¤‡çš„æ˜¾ç¤ºæ¯”(4:3?16:9)
+    //2.æ ¹æ®è®¾å¤‡çš„æ˜¾ç¤ºæ¯”ä¾‹è®¾è®¡ç›¸åº”çš„è®¾è®¡å°ºå¯¸
+    //3.æ ¹æ®è®¾è®¡å°ºå¯¸(æ˜¾ç¤ºæ¯”)å‡†å¤‡ç›¸åº”çš„Resource
+    //â€»ç”±äºŽé«˜æ¸…å’Œéžé«˜æ¸…çš„åŒºåˆ«,å¯èƒ½éœ€è¦å‡†å¤‡2å¥—èµ„æºåˆ†åˆ«å¯¹åº”
+    //â€»ä½¿ç”¨éžé«˜æ¸…çš„èµ„æºå¯ä»¥èŠ‚çº¦å†…å­˜ç©ºé—´çš„ä½¿ç”¨.
+    //
+    //è¯¾é¢˜:
+    //å¦‚ä½•é€šè¿‡å®žé™…å°ºå¯¸èŽ·å¾—æ˜¾ç¤ºæ¯”å¹¶ä¸”è®¾è®¡è®¾è®¡å°ºå¯¸
+    //
+    //iOS è®¾å¤‡çŽ°æœ‰çš„åˆ†è¾¨çŽ‡å¦‚ä¸‹ï¼š
+    //iPhone/iPod Touch
+    //3 :2 æ™®é€š   å± 320 åƒç´  x 480 åƒç´  Point(320*480)iPhone 1ã€3Gã€3GSï¼ŒiPod Touch 1ã€2ã€3
+    //3 :2 Retina å± 640 åƒç´  x 960 åƒç´  Point(320*480)iPhone 4ã€4Sï¼ŒiPod Touch 4
+    //16:9 Retina å± 640 åƒç´  x 1136åƒç´  Point(320*568)iPhone 5ã€5sã€SEï¼ŒiPod Touch 5
+    //16:9 Retina å± 750 åƒç´  x 1334åƒç´  Point(320*568,375*667)iPhone 6
+    //16:9 Retina å± 1080åƒç´  x 1920åƒç´  Point(375*667,414*736)iPhone 6
+    //
+    //iPad
+    //4 :3 Retina å± 1536åƒç´  x 2048åƒç´  Point(768*1024)iPadï¼ŒiPad miniï¼ŒiPad air
+    //4 :3 Retina å± 2048åƒç´  x 2732åƒç´  Point(1024*1366)iPad Pro
+    //
+    //ä¸ºäº†æ–¹ä¾¿å¼€å‘äººå‘˜å¼€å‘ï¼ŒiOS ä¸­ç»Ÿä¸€ä½¿ç”¨ç‚¹ï¼ˆPointï¼‰å¯¹ç•Œé¢å…ƒç´ çš„å¤§å°è¿›è¡Œæè¿°ã€‚
+    //ç‚¹è·Ÿåƒç´ çš„æ¢ç®—å…³ç³»å¦‚ä¸‹ï¼š
+    //æ™®é€š   å± 1ç‚¹ = 1åƒç´ 
+    //Retina å± 1ç‚¹ = 2åƒç´ 
+    //
+    //è€Œåœ¨ iPhone 5 è·Ÿ iPod Touch 5 çš„æœºå™¨ä¸Šï¼Œå¯¹äºŽå¼€å‘è€…æ¥è¯´ï¼Œ
+    //å®ƒçš„ç•Œé¢å¤§å°å°±æ˜¯ 320 x 568ç‚¹ï¼Œä½ åªéœ€æ ¹æ®è¿™ä¸ªå¤§å°åŽ»è°ƒæ•´ä½ çš„ç•Œé¢ã€‚
+    //æ¯”å¦‚ï¼šæˆ‘æœ‰ä¸€ä¸ªæŒ‰é’®ï¼Œè¦æ”¾åœ¨å±å¹•ä¸­é—´çš„ä½ç½®ï¼Œ
+    //é‚£ä¹ˆåœ¨ç•Œé¢å¤§å°ä¸º 320 x 480ç‚¹ çš„è®¾å¤‡ä¸Šï¼Œåªéœ€è®¾ç½®å®ƒçš„ center ä¸º (320/2, 480/2) ä½ç½®å³å¯ï¼Œ
+    //åœ¨ 3ï¼š2 Retina å±ä¸Šç³»ç»Ÿè¿™ä¸ªæŒ‰é’®ä¹Ÿå¯ä»¥æ­£ç¡®çš„æ˜¾ç¤ºåœ¨ä¸­é—´ï¼›
+    //è€Œåœ¨å±å¹•å¤§å°ä¸º 320 x 568ç‚¹ çš„è®¾å¤‡ä¸Šï¼Œä½ å°±è®¾ç½®å®ƒçš„ center ä¸º (320/2, 568/2)ã€‚
+    //
+    //https://designcode.io/iosdesign-guidelines
+    //https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
+    
+    auto frameSize = glview->getFrameSize();
+    
+    //åˆ›å»ºæ–‡ä»¶æ£€ç´¢ç”¨æ–‡ä»¶å¤¹åˆ—è¡¨
+    std::vector<std::string> searchResolutionOrder;
+    
+    switch( platform )
+    {
+        case Platform::OS_IPHONE:
+        case Platform::OS_IPAD:
+            //æ ¹æ®åˆ†è¾¨çŽ‡(é«˜å®½æ¯”)è®¾å®šDesignSize(WinSize)
+            //æ ¹æ®åˆ†è¾¨çŽ‡(é«˜å®½æ¯”)è®¾å®šä½¿ç”¨çš„èµ„æºè·¯å¾„Retinaä¸ŽNonRetina
 #ifdef Landscape
-			if( frameSize.width > iPhon5FrameSize.width )
+            if( frameSize.width > iPhon5FrameSize.width )
 #else
-			if( frameSize.height > iPhon5FrameSize.height )
+                if( frameSize.height > iPhon5FrameSize.height )
 #endif
-			{
-				director->setContentScaleFactor(2.0f);
-				
-				glview->setDesignResolutionSize(iPhon6FrameSize.width, iPhon6FrameSize.height, ResolutionPolicy:FIXED_HEIGHT);
-				
-				serchResolutionOrder.push_back("images/retina");
-			}
+                {
+                    director->setContentScaleFactor(2.0f);
+                    
+                    glview->setDesignResolutionSize(iPhon6DesignSize.width, iPhon6DesignSize.height, ResolutionPolicy::FIXED_HEIGHT);
+                    
+                    searchResolutionOrder.push_back("images/retina");
+                }
 #ifdef Landscape
-			else if( frameSize.width > iPhon4DesignSize.width )
+                else if( frameSize.width > iPhon4FrameSize.width )
 #else
-			else if( frameSize.height > iPhon4DesignSize.height )
-#endif			
-			{
-				director->setContentScaleFactor(2.0f);
-				
-				glview->setDesignResolutionSize(iPhon5FrameSize.width, iPhon5FrameSize.height, ResolutionPolicy:FIXED_HEIGHT);
-				
-				serchResolutionOrder.push_back("images/retina");
-			}
-			else
-			{
-				director->setContentScaleFactor(1.0f);
-				
-				glview->setDesignResolutionSize(iPhon4FrameSize.width, iPhon4FrameSize.height, ResolutionPolicy:FIXED_HEIGHT);
-
-				serchResolutionOrder.push_back("images/nonretina");
-			}
-
-			//iOSÖ§³ÖµÄÒôÆµ¸ñÊ½
-			serchResolutionOrder.push_back("music/caf");
-			serchResolutionOrder.push_back("se/caf");
-		break;
-		
-		case Platform::ANDROID:
-			//AndroidÔÝÊ±²»¿¼ÂÇ,¹Ì¶¨ÎªiPhone4Éè¶¨
-			director->setContentScaleFactor(1.0f);
-			
-			glview->setDesignResolutionSize(iPhon4FrameSize.width, iPhon4FrameSize.height, ResolutionPolicy:FIXED_HEIGHT);
-
-			serchResolutionOrder.push_back("images/nonretina");
-
-			//AndroidÖ§³ÖµÄÒôÆµ¸ñÊ½
-			serchResolutionOrder.push_back("music/ogg");
-			serchResolutionOrder.push_back("se/ogg");
-		break;
-		
-		default:
-			//ÆäËûÆ½Ì¨µÄÉè¶¨
-		break;
-		
-	}
-
-	serchResolutionOrder.push_back("fonts");
-	serchResolutionOrder.push_back("map");
-	serchResolutionOrder.push_back("model");
-	serchResolutionOrder.push_back("psd");
-
-	FileUtils::getInstance()->setSerchiResolutionOrder(serchResolutionOrder);
-	
-
+                    else if( frameSize.height > iPhon4FrameSize.height )
+#endif
+                    {
+                        director->setContentScaleFactor(2.0f);
+                        
+                        glview->setDesignResolutionSize(iPhon5DesignSize.width, iPhon5DesignSize.height, ResolutionPolicy::FIXED_HEIGHT);
+                        
+                        searchResolutionOrder.push_back("images/retina");
+                    }
+                    else
+                    {
+                        director->setContentScaleFactor(1.0f);
+                        
+                        glview->setDesignResolutionSize(iPhon4DesignSize.width, iPhon4DesignSize.height, ResolutionPolicy::FIXED_HEIGHT);
+                        
+                        searchResolutionOrder.push_back("images/nonretina");
+                    }
+            
+            //iOSæ”¯æŒçš„éŸ³é¢‘æ ¼å¼
+            searchResolutionOrder.push_back("music/caf");
+            searchResolutionOrder.push_back("se/caf");
+            break;
+            
+        case Platform::OS_ANDROID:
+            //Androidæš‚æ—¶ä¸è€ƒè™‘,å›ºå®šä¸ºiPhone4è®¾å®š
+            director->setContentScaleFactor(1.0f);
+            
+            glview->setDesignResolutionSize(iPhon4DesignSize.width, iPhon4DesignSize.height, ResolutionPolicy::FIXED_HEIGHT);
+            
+            searchResolutionOrder.push_back("images/nonretina");
+            
+            //Androidæ”¯æŒçš„éŸ³é¢‘æ ¼å¼
+            searchResolutionOrder.push_back("music/ogg");
+            searchResolutionOrder.push_back("se/ogg");
+            break;
+            
+        default:
+            //å…¶ä»–å¹³å°çš„è®¾å®š
+            break;
+            
+    }
+    
+    searchResolutionOrder.push_back("fonts");
+    searchResolutionOrder.push_back("map");
+    searchResolutionOrder.push_back("model");
+    searchResolutionOrder.push_back("psd");
+    
+    FileUtils::getInstance()->setSearchResolutionsOrder(searchResolutionOrder);
+    
     register_all_packages();
-
+    
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
-
+    
     // run
     director->runWithScene(scene);
-
+    
     return true;
 }
 
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-
+    
     // if you use SimpleAudioEngine, it must be paused
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
@@ -282,7 +281,7 @@ void AppDelegate::applicationDidEnterBackground() {
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
-
+    
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
