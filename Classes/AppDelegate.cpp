@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+#include "MainScene.h"
 
 USING_NS_CC;
 
@@ -66,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         //电脑端运行时候需要创建游戏窗口.第二个参数就是游戏窗口位置与大小
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("MyCppGame", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("MyCppGame", cocos2d::Rect(0, 0, iPhon6DesignSize.width, iPhon6DesignSize.height));
 #else
         //移动端运行时候默认游戏窗口就是设备显示大小，所以不需要另外设置窗口大小
         glview = GLViewImpl::create("MyCppGame");
@@ -262,7 +262,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
     
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
+    auto scene = MainScene::createScene();
     
     // run
     director->runWithScene(scene);

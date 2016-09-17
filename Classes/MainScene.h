@@ -2,6 +2,7 @@
 #define __MAIN_SCENE_H__
 
 #include "cocos2d.h"
+#include "Stage.hpp"
 
 class MainScene : public cocos2d::Layer
 {
@@ -19,6 +20,8 @@ public:
 
 	void update(float dt) override;
 
+    CC_SYNTHESIZE_RETAIN(Stage*, _stage, stage);
+    
 	CREATE_FUNC(MainScene);
 
 };
