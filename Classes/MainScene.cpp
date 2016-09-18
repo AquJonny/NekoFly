@@ -7,12 +7,16 @@ USING_NS_CC;
 //重力参数 ※(0,-3)是什么意思??
 const Vec2 PHYSICS_ENGINE_GRAVITY = Vec2(0, -3);
 
+//
+const Vec2 PHYSICS_ENGINE_IMPLUSE = Vec2(0, 180);
+
 //速度参数 ※6.0是什么意思??
 const float PHYSICS_ENGINE_SPEED = 6.0;
 
 //构造函数
 MainScene::MainScene()
 :_stage(nullptr)
+,_IsTouch(false)
 {
     
 }
@@ -80,12 +84,46 @@ bool MainScene::init()
     this->setstage(stage);
     this->addChild(stage);
     
+    //
+    auto TouchEvent = EventListenerTouchOneByOne::create();
+    
+    TouchEvent->onTouchBegan =
+    [this](Touch* touch, Event* event)
+    {
+        this->setIsTouch(true);
+        
+        return true;
+    };
+    
+    TouchEvent->onTouchMoved =
+    [this](Touch* touch,Event* event)
+    {
+        this->setIsTouch(false);
+    };
+    
+    TouchEvent->onTouchEnded =
+    [this](Touch* touch,Event* event)
+    {
+        this->setIsTouch(false);
+    };
+    
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(TouchEvent, this);
+    
+    this->scheduleUpdate();
+    
     return true;
 }
 
 //Updata函数
 void MainScene::update(float dt)
 {
+    if (this->getIsTouch())
+    {
+        //
+        _stage->getplayer()->getPhysicsBody()->applyImpulse(PHYSICS_ENGINE_IMPLUSE);
+        
+    }
+    
     
 }
 

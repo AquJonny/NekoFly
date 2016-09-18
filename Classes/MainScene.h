@@ -20,6 +20,8 @@ public:
 
 	void update(float dt) override;
 
+    CC_SYNTHESIZE(bool, _IsTouch, IsTouch);
+    
     CC_SYNTHESIZE_RETAIN(Stage*, _stage, stage);
     
 	CREATE_FUNC(MainScene);

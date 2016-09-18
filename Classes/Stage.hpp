@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
+#include "Player.h"
 
 class Stage : public cocos2d::Layer
 {
@@ -25,6 +26,8 @@ public:
     CREATE_FUNC(Stage);
     
     CC_SYNTHESIZE_RETAIN(cocos2d::TMXTiledMap*, _StageMap, StageMap);
+    
+    CC_SYNTHESIZE_RETAIN(cocos2d::Sprite*, _player, player);
     
     //给制定Layer的特定坐标点图块设置刚体
     //如果指定坐标位置没有图块存在，则返回nullptr

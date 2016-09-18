@@ -12,6 +12,7 @@ USING_NS_CC;
 
 Stage::Stage()
 :_StageMap(nullptr)
+,_player(nullptr)
 {
 
 }
@@ -20,6 +21,7 @@ Stage::~Stage()
 {
 
     CC_SAFE_RELEASE_NULL(_StageMap);
+    CC_SAFE_RELEASE_NULL(_player);
     
 }
 
@@ -53,6 +55,14 @@ bool Stage::init()
         }
     }
     
+    //
+    auto player = Player::create();
+    player->setPosition(Point(40, 160));
+    this->setplayer(player);
+    this->addChild(player);
+    
+    
+    this->scheduleUpdate();
     
     return true;
 }
