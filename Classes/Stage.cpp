@@ -32,19 +32,21 @@ bool Stage::init()
         return false;
     }
     
+    auto winSize = Director::getInstance()->getWinSize();
+    
     //创建TMXTiledMap地图对象，并加入当前Layer层。
     auto stagemap = TMXTiledMap::create("stage1.tmx");
     this->setStageMap(stagemap);
     this->addChild(stagemap);
     
-    //
+    //获取TiledMap中的图层
     auto terrainLayer = stagemap->getLayer("Terrain");
     auto objectLayer  = stagemap->getLayer("Object");
     
-    //
+    //获取TiledMap的地图尺寸信息
     auto mapSize = stagemap->getMapSize();
     
-    //
+    //遍历地图中每一个图块，为其添加物理刚体
     for (int width = 0; width < mapSize.width; width++)
     {
         for (int height = 0; height < mapSize.height ; height++)
@@ -55,12 +57,20 @@ bool Stage::init()
         }
     }
     
-    //
+    //设置Sprite
     auto player = Player::create();
-    player->setPosition(Point(40, 160));
+    player->setPosition(Point(40, winSize.height/2.0));
     this->setplayer(player);
     this->addChild(player);
     
+    //追随动作，追踪某个Node，在一定范围Rect内
+    //不过屏幕会显示地图范围之外的区域，需要边界判断优化?
+    auto follow = Follow::create(player, Rect(0,
+                                              0,
+                                              stagemap->getContentSize().width,
+                                              stagemap->getContentSize().height));
+    
+    this->runAction(follow);
     
     this->scheduleUpdate();
     
@@ -84,7 +94,7 @@ cocos2d::Sprite* Stage::addPhysicsBody(cocos2d::TMXLayer* Layer, cocos2d::Vec2& 
         //friction：摩擦
         auto material = PhysicsMaterial();
         material.friction = 0;
-        
+         
         //创建PhysicsBox，区域是sprite，使用的材料是material
         auto physicsBox = PhysicsBody::createBox(sprite->getContentSize(), material);
         
@@ -94,7 +104,7 @@ cocos2d::Sprite* Stage::addPhysicsBody(cocos2d::TMXLayer* Layer, cocos2d::Vec2& 
         //设置锚点居中
         sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        //给sprite加载physicsbox
+        //给sprite加载刚体
         sprite->setPhysicsBody(physicsBox);
         
         return sprite;
