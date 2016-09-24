@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="150" height="14" tilewidth="48" tileheight="48">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="14" tilewidth="48" tileheight="48" nextobjectid="1">
  <tileset firstgid="1" source="object.tsx"/>
  <tileset firstgid="6" source="terrain.tsx"/>
  <layer name="Terrain" width="150" height="14">
   <data encoding="base64" compression="zlib">
-   eJztl0sSwCAIQ115/yN32401mCDayZth1UARGD+9tdZtNrExsP67Ypq78FyZDCrnqkqX5X9azF11Oykmeo5n6Bj/CJUx1booFXOF3hHVulFuiH/0fqu+B0diVub4jq1m1lekP2rdKDf2PcTOIKvbVbco3q+42ipyj/zL+9Vcg6wlQ8f4o/HQmCv/q6jbTTBnzapO2WPEh/3O+Kh15h7cU2OM4fl6M9o4+yvI2h9Msgt3
+   eJztl0sOACEIQ115/yPP1o1jsUU06UtYTUEGiJ/eWus2m9gYWP9TMc1beK5MBpVzVaXL8r8t5qm63RQTPcczdIx/hMqYal2UirlC74hq3Sw3xD96v1XfgyMxK3McY6tZ9RXpj1o3y419D7EzyOpO1S2K9yuutorcI2t5v1prkH/J0DH+aDw05s56FXV7Ceas2dUpe4z4sN8ZH7XOvIN7aowxPH9vRptt1z4FiQy7
   </data>
  </layer>
  <layer name="Object" width="150" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt1EEOgCAMRFEi97+zBzAxENoybf9L3BEsw+gYgJ7H+FGmPl8l9ErTzqyrayPPT6/07OS5ujb6jjr1KhP+V/QKXxl7NYPe80dhBmUZewV99Aoe6BU8dOqV9VkrZ3WqU1a3e2SZ1cm+Efdokc80nMfT7R6pfIPKs6G2F6/fAxY=
+   eJzt1EEOgCAMBVEC3v/MHMBIaGybX5iXuDNacKQ1QE93vpSpz3cSutJkmXX33sz105Uey37u3pv9jW7qqhLOK7rCW8WuRtJ7VhRmUFaxK+ijK0SgK0SI7uqJHd/Ee638g9/oqmZXf56b0bzH/ozFPHSld14pz4azTfy/AyI=
   </data>
  </layer>
 </map>

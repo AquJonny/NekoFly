@@ -64,6 +64,12 @@ bool Player::init()
     //创建刚体，设置其不可旋转
     auto physicsCircle = PhysicsBody::createCircle(frameSize.width/2.0);
     physicsCircle->setRotationEnable(false);
+    
+    //刚体的碰撞配置
+    physicsCircle->setCategoryBitmask(static_cast<int>(Stage::TileType::Player));
+    physicsCircle->setCollisionBitmask(static_cast<int>(Stage::TileType::Wall));
+    physicsCircle->setContactTestBitmask(INT_MAX);
+    
     this->setPhysicsBody(physicsCircle);
     
     //设置初期加速度

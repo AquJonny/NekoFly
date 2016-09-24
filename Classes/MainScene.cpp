@@ -2,21 +2,7 @@
 
 USING_NS_CC;
 
-#define __PJ_DEBUG__
-
-//重力参数 ※(0,-3)是什么意思?? -> x,y 正值为往右往上，负值为往左往下
-const Vec2 PHYSICS_ENGINE_GRAVITY = Vec2(0, -3);
-
-//浮力参数 ※(0，180)
-const Vec2 PHYSICS_ENGINE_IMPLUSE = Vec2(0, 180);
-
-//速度参数 ※6.0是什么意思??
-const float PHYSICS_ENGINE_SPEED = 6.0;
-
-const int ZORDER_BACKGROUND = 0;
-const int ZORDER_STAGE = 1;
-const int ZORDER_PLAYER = 2;
-
+#define _NO_PJ_DEBUG__
 
 //构造函数
 MainScene::MainScene()
@@ -33,7 +19,8 @@ MainScene::~MainScene()
 }
 
 //Create函数
-Scene* MainScene::createScene()
+//Scene* MainScene::createScene()
+Scene* MainScene::createWithLevel(int level)
 {
     auto scene = Scene::createWithPhysics();
     auto world = scene->getPhysicsWorld();
@@ -46,9 +33,18 @@ Scene* MainScene::createScene()
     
 #endif
     
-    auto layer = MainScene::create();
+    //auto layer = MainScene::create();
+    auto layer = new MainScene();
+    if(layer->initWithLevel(level))
+    {
+        layer->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(layer);
+    }
     
-    scene->addChild(layer);
+    scene->addChild(layer, ZORDER_BACKGROUND);
     
     /*
     创建带有物理引擎效果的世界
@@ -102,16 +98,17 @@ Scene* MainScene::createScene()
 }
 
 //初期化函数
-bool MainScene::init()
+//bool MainScene::init()
+bool MainScene::initWithLevel(int level)
 {
     if(!Layer::init())
     {
         return false;
     }
     
-    auto winsize = Director::getInstance()->getWinSize();
+    auto WinSize = Director::getInstance()->getWinSize();
     
-    log("WinSize: %f,%f", winsize.width, winsize.height);
+    log("WinSize: %f,%f", WinSize.width, WinSize.height);
     
     /*create Sprite for test*/
     /*
@@ -134,14 +131,15 @@ bool MainScene::init()
     //Layer不会随着屏幕适配进行缩放。如何解决？？
     
     auto bkground = Sprite::create("background.png");
-    bkground->setPosition(Point(winsize.width/2.0, winsize.height/2.0));
+    bkground->setPosition(Point(WinSize.width/2.0, WinSize.height/2.0));
     this->addChild(bkground, ZORDER_BACKGROUND);
     
-    auto stage = Stage::create();
+    //auto stage = Stage::create();
+    auto stage = Stage::creatWithLevel(level);
     
     this->setstage(stage);
     this->addChild(stage, ZORDER_STAGE);
-    
+
     //创建单点按键监听事件
     auto TouchEvent = EventListenerTouchOneByOne::create();
     
@@ -172,10 +170,19 @@ bool MainScene::init()
     //创建物理碰撞监视器
     auto physicsContact = EventListenerPhysicsContact::create();
     
+    //最初的碰撞
     physicsContact->onContactBegin =
     [this](PhysicsContact& contact)
     {
-        log("hit!!!!!!!!!!!!!!!!");
+        
+        auto bitmaskA = contact.getShapeA()->getCategoryBitmask();
+        auto bitmaskB = contact.getShapeB()->getCategoryBitmask();
+        
+        if (( bitmaskA == static_cast<int>(Stage::TileType::Enemy) )||
+            ( bitmaskB == static_cast<int>(Stage::TileType::Enemy) ))
+        {
+            this->GameFail();
+        }
         return true;
     };
     
@@ -197,7 +204,38 @@ void MainScene::update(float dt)
         _stage->getplayer()->getPhysicsBody()->applyImpulse(PHYSICS_ENGINE_IMPLUSE);
         
     }
-    
-    
 }
 
+void MainScene::GameFail()
+{
+    //
+    _stage->getplayer()->removeFromParent();
+    //getPhysicsBody()->setDynamic(false);
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto menulayer =LayerColor::create(Color4B(0,0,0,100));
+    //LayerColor::initWithColor(Color4B(0,0,0,100));
+    //create();
+    
+    auto gameover = Sprite::create("gameover.png");
+    gameover->setPosition(Point(winSize.width/2.0, winSize.height/1.5));
+    menulayer->addChild(gameover);
+    
+    auto menuItem = MenuItemImage::create("replay.png",
+                                          "replay_pressed.png",
+                                          [this](Ref* ref)
+                                          {
+                                              auto scene = MainScene::createWithLevel(_stage->getlevel());
+                                              auto replay = TransitionMoveInT::create(1.0f, scene);
+                                              Director::getInstance()->replaceScene(replay);
+                                          });
+    auto menu = Menu::create(menuItem, nullptr);
+    
+    menu->setPosition(Point(winSize.width/2.0, winSize.height/3));
+    
+    menulayer->addChild(menu);
+    
+    this->addChild(menulayer, ZORDER_MENU);
+
+}

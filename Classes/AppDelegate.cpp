@@ -3,6 +3,8 @@
 
 USING_NS_CC;
 
+const int INITALZE_LEVEL = 1;
+
 //定义屏幕分辨率类型 横屏 or 竖屏
 #define Landscape
 
@@ -262,7 +264,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
     
     // create a scene. it's an autorelease object
-    auto scene = MainScene::createScene();
+    //auto scene = MainScene::createScene();
+    auto scene = MainScene::createWithLevel(INITALZE_LEVEL);
     
     // run
     director->runWithScene(scene);
