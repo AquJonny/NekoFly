@@ -8,6 +8,9 @@ USING_NS_CC;
 MainScene::MainScene()
 :_stage(nullptr)
 ,_IsTouch(false)
+,_coin(0)
+,_coinLabel(nullptr)
+,_bkground(nullptr)
 {
     
 }
@@ -16,6 +19,8 @@ MainScene::MainScene()
 MainScene::~MainScene()
 {
     CC_SAFE_RELEASE_NULL(_stage);
+    CC_SAFE_RELEASE_NULL(_coinLabel);
+    CC_SAFE_RELEASE_NULL(_bkground);
 }
 
 //Create函数
@@ -126,19 +131,39 @@ bool MainScene::initWithLevel(int level)
     /*
     实验效果，被创建的精灵会自动下落，而且掉出屏幕
     */
-    
-    //创建Layer对象－－stage
-    //Layer不会随着屏幕适配进行缩放。如何解决？？
-    
-    auto bkground = Sprite::create("background.png");
-    bkground->setPosition(Point(WinSize.width/2.0, WinSize.height/2.0));
-    this->addChild(bkground, ZORDER_BACKGROUND);
-    
+ 
     //auto stage = Stage::create();
     auto stage = Stage::creatWithLevel(level);
     
     this->setstage(stage);
     this->addChild(stage, ZORDER_STAGE);
+    
+    //
+    auto bkground = Sprite::create("background.png");
+    bkground->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    
+    //
+    auto parallaxNode = cocos2d::ParallaxNode::create();
+    this->setbkground(parallaxNode);
+
+    auto mapweidth = _stage->getStageMap()->getContentSize().width;
+    auto bkweidth  = bkground->getContentSize().width;
+    
+    //
+    auto scroll = (bkweidth-WinSize.width)/mapweidth;
+
+    //
+    parallaxNode->addChild(bkground,0,Vec2(scroll,0),Vec2::ZERO);
+ 
+    this->addChild(parallaxNode, ZORDER_BACKGROUND);
+    
+    //
+    auto label = Label::createWithCharMap("numbers.png", 32, 36, '0');
+    
+    label->setPosition(Point(WinSize.width/2.0, WinSize.height-20));
+    label->enableShadow();
+    this->addChild(label,ZORDER_MENU);
+    this->setcoinLabel(label);
 
     //创建单点按键监听事件
     auto TouchEvent = EventListenerTouchOneByOne::create();
@@ -175,14 +200,29 @@ bool MainScene::initWithLevel(int level)
     [this](PhysicsContact& contact)
     {
         
-        auto bitmaskA = contact.getShapeA()->getCategoryBitmask();
-        auto bitmaskB = contact.getShapeB()->getCategoryBitmask();
+        auto target = contact.getShapeA()->getBody() == _stage->getplayer()->getPhysicsBody()?contact.getShapeB():contact.getShapeA();
         
-        if (( bitmaskA == static_cast<int>(Stage::TileType::Enemy) )||
-            ( bitmaskB == static_cast<int>(Stage::TileType::Enemy) ))
-        {
-            this->GameFail();
+        auto bitmask = target->getCategoryBitmask();
+
+        switch ( bitmask ) {
+            case static_cast<int>(Stage::TileType::Enemy):
+                    this->GameFail();
+                break;
+                
+            case static_cast<int>(Stage::TileType::Coin):
+                    //
+                    target->getBody()->getNode()->removeFromParent();
+                
+                    _coin += 1;
+                
+                    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("coin.caf");
+                    CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
+                break;
+                
+            default:
+                break;
         }
+        
         return true;
     };
     
@@ -204,6 +244,25 @@ void MainScene::update(float dt)
         _stage->getplayer()->getPhysicsBody()->applyImpulse(PHYSICS_ENGINE_IMPLUSE);
         
     }
+    
+    this->getcoinLabel()->setString(StringUtils::toString(_coin));
+    
+    auto winsize = Director::getInstance()->getWinSize();
+    auto mapsize = _stage->getStageMap()->getContentSize();
+    auto playerP = _stage->getplayer()->getPosition();
+    
+    if (( playerP.x > (winsize.width * 0.5) )&&
+        ( playerP.x < (mapsize.width - winsize.width * 0.5) ))
+    {
+        _bkground->setPosition(Point((playerP.x - winsize.width * 0.5),playerP.y) * -1);
+    }
+    
+    if ( playerP.x > mapsize.width )
+    {
+        this->GameFinish();
+
+    }
+    
 }
 
 void MainScene::GameFail()
@@ -212,30 +271,98 @@ void MainScene::GameFail()
     _stage->getplayer()->removeFromParent();
     //getPhysicsBody()->setDynamic(false);
     
-    auto winSize = Director::getInstance()->getWinSize();
+    auto failshow = ParticleExplosion::create();
+    failshow->setPosition(_stage->getplayer()->getPosition());
+    _stage->addChild(failshow);
     
-    auto menulayer =LayerColor::create(Color4B(0,0,0,100));
-    //LayerColor::initWithColor(Color4B(0,0,0,100));
-    //create();
+    
+    auto winSize = Director::getInstance()->getWinSize();
     
     auto gameover = Sprite::create("gameover.png");
     gameover->setPosition(Point(winSize.width/2.0, winSize.height/1.5));
-    menulayer->addChild(gameover);
+    this->addChild(gameover, ZORDER_MENU);
     
     auto menuItem = MenuItemImage::create("replay.png",
                                           "replay_pressed.png",
                                           [this](Ref* ref)
                                           {
                                               auto scene = MainScene::createWithLevel(_stage->getlevel());
-                                              auto replay = TransitionMoveInT::create(1.0f, scene);
+                                              auto replay = TransitionFade::create(1.0f, scene);
                                               Director::getInstance()->replaceScene(replay);
                                           });
     auto menu = Menu::create(menuItem, nullptr);
     
     menu->setPosition(Point(winSize.width/2.0, winSize.height/3));
     
-    menulayer->addChild(menu);
-    
-    this->addChild(menulayer, ZORDER_MENU);
+    this->addChild(menu, ZORDER_MENU);
 
+}
+
+void MainScene::GameFinish()
+{
+    //
+    _stage->getplayer()->removeFromParent();
+    //getPhysicsBody()->setDynamic(false);
+    
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("complete.caf", false);
+    //CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
+    
+    /*
+    auto failshow = ParticleExplosion::create();
+    failshow->setPosition(_stage->getplayer()->getPosition());
+    _stage->addChild(failshow);
+    */
+    
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    auto clear = Sprite::create("clear.png");
+    clear->setPosition(Point(winSize.width/2.0, winSize.height/1.5));
+    this->addChild(clear, ZORDER_MENU);
+    
+    auto level = _stage->getlevel() + 1;
+    
+    if ( level > MAX_STAGE_LEVEL )
+    {
+        level = MAX_STAGE_LEVEL;
+    }
+
+    auto menuItem = MenuItemImage::create("next.png",
+                                        "next_pressed.png",
+                                        [this, level](Ref* ref)
+                                        {
+                                            auto scene = MainScene::createWithLevel(level);
+                                            auto replay = TransitionFade::create(1.0f, scene);
+                                            Director::getInstance()->replaceScene(replay);
+                                        });
+    
+    auto menuItem2 = MenuItemImage::create("return.png",
+                                           "return_pressed.png",
+                                           [this](Ref* ref)
+                                           {
+                                               auto scene = TitleScene::createScene();
+                                               auto title = TransitionFadeUp::create(1.0f, scene);
+                                               Director::getInstance()->replaceScene(title);
+                                           });
+    
+    auto menu = Menu::create(menuItem, menuItem2, nullptr);
+    
+    menu->alignItemsHorizontallyWithPadding(100.0);
+    
+    menu->setPosition(Point(winSize.width/2.0, winSize.height/3));
+
+    this->addChild(menu, ZORDER_MENU);
+    
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("clear.caf", false);
+    //CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+
+}
+
+void MainScene::onEnterTransitionDidFinish()
+{
+    Layer::onEnterTransitionDidFinish();
+    
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("main.caf", true);
+    CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+    
 }
