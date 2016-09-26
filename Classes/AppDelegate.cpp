@@ -270,6 +270,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // run
     director->runWithScene(scene);
     
+    //
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("title.caf");
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("main.caf");
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("clears.caf");
+    
+    
     return true;
 }
 
