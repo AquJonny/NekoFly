@@ -233,6 +233,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
             //iOS支持的音频格式
             searchResolutionOrder.push_back("music/caf");
             searchResolutionOrder.push_back("se/caf");
+
+            //预加载
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("title.caf");
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("main.caf");
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("clears.caf");
+            
             break;
             
         case Platform::OS_ANDROID:
@@ -246,6 +252,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
             //Android支持的音频格式
             searchResolutionOrder.push_back("music/ogg");
             searchResolutionOrder.push_back("se/ogg");
+    
+            //预加载
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("title.ogg");
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("main.ogg");
+            CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("clears.ogg");
+            
             break;
             
         default:
@@ -270,11 +282,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // run
     director->runWithScene(scene);
     
-    //
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("title.caf");
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("main.caf");
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadbackgroundmusic("clears.caf");
-    
+
     
     return true;
 }

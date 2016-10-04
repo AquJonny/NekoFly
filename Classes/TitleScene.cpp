@@ -65,8 +65,10 @@ void TitleScene::update(float dt)
 void TitleScene::onEnterTransitionDidFinish()
 {
     Layer::onEnterTransitionDidFinish();
-    
+   
+#ifndef __MUTE_ON__
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("title.caf", true);
     CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+#endif
     
 }

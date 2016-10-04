@@ -11,7 +11,7 @@
 const cocos2d::Vec2 PHYSICS_ENGINE_GRAVITY = cocos2d::Vec2(0, -3);
 
 //浮力参数 ※(0，180)
-const cocos2d::Vec2 PHYSICS_ENGINE_IMPLUSE = cocos2d::Vec2(0, 500);
+const cocos2d::Vec2 PHYSICS_ENGINE_IMPLUSE = cocos2d::Vec2(0, 50);
 
 //速度参数 ※6.0是什么意思??
 const float PHYSICS_ENGINE_SPEED = 6.0;
@@ -42,6 +42,8 @@ public:
     
     CC_SYNTHESIZE_RETAIN(Stage*, _stage, stage);
     CC_SYNTHESIZE_RETAIN(cocos2d::Label*, _coinLabel, coinLabel);
+    
+    //创建视差节点，用作背景层的滚动显示
     CC_SYNTHESIZE_RETAIN(cocos2d::ParallaxNode*, _bkground, bkground);
     
     CC_SYNTHESIZE(short, _coin, coin);

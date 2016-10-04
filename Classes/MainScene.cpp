@@ -3,6 +3,7 @@
 USING_NS_CC;
 
 #define _NO_PJ_DEBUG__
+#define __MUTE_ON__
 
 //构造函数
 MainScene::MainScene()
@@ -138,21 +139,24 @@ bool MainScene::initWithLevel(int level)
     this->setstage(stage);
     this->addChild(stage, ZORDER_STAGE);
     
-    //
+    //创建背景精灵，设置锚点为左下
     auto bkground = Sprite::create("background.png");
     bkground->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     
-    //
+    //创建视差节点，
     auto parallaxNode = cocos2d::ParallaxNode::create();
     this->setbkground(parallaxNode);
 
+    //Title地图的宽
     auto mapweidth = _stage->getStageMap()->getContentSize().width;
+    
+    //背景图片的宽
     auto bkweidth  = bkground->getContentSize().width;
     
-    //
+    //（背景图片宽度－屏幕宽度）／地图宽度
     auto scroll = (bkweidth-WinSize.width)/mapweidth;
 
-    //
+    //给时差节点添加子Node，参数含义：子Node，Zorder，位移参数，原点坐标（相对于时差节点）
     parallaxNode->addChild(bkground,0,Vec2(scroll,0),Vec2::ZERO);
  
     this->addChild(parallaxNode, ZORDER_BACKGROUND);
@@ -172,7 +176,9 @@ bool MainScene::initWithLevel(int level)
     TouchEvent->onTouchBegan =
     [this](Touch* touch, Event* event)
     {
-        this->setIsTouch(true);
+        _stage->getplayer()->getPhysicsBody()->setVelocity(PHYSICS_ENGINE_IMPLUSE);
+        
+        //this->setIsTouch(true);
         
         return true;
     };
@@ -180,13 +186,16 @@ bool MainScene::initWithLevel(int level)
     TouchEvent->onTouchMoved =
     [this](Touch* touch,Event* event)
     {
-        this->setIsTouch(false);
+        _stage->getplayer()->getPhysicsBody()->setVelocity(Vec2(0,0));
+        //this->setIsTouch(false);
     };
     
     TouchEvent->onTouchEnded =
     [this](Touch* touch,Event* event)
     {
-        this->setIsTouch(false);
+        _stage->getplayer()->getPhysicsBody()->setVelocity(Vec2(0,0));
+
+        //this->setIsTouch(false);
     };
     
     //EventDispatcher事件发报机中添加监听事件
@@ -214,9 +223,10 @@ bool MainScene::initWithLevel(int level)
                     target->getBody()->getNode()->removeFromParent();
                 
                     _coin += 1;
-                
+#ifndef __MUTE_ON__
                     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("coin.caf");
                     CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
+#endif
                 break;
                 
             default:
@@ -245,8 +255,10 @@ void MainScene::update(float dt)
         
     }
     
+    //硬币得分计数板
     this->getcoinLabel()->setString(StringUtils::toString(_coin));
     
+    //
     auto winsize = Director::getInstance()->getWinSize();
     auto mapsize = _stage->getStageMap()->getContentSize();
     auto playerP = _stage->getplayer()->getPosition();
@@ -303,10 +315,12 @@ void MainScene::GameFinish()
     //
     _stage->getplayer()->removeFromParent();
     //getPhysicsBody()->setDynamic(false);
-    
+
+#ifndef __MUTE_ON__
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("complete.caf", false);
     //CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
+#endif
     
     /*
     auto failshow = ParticleExplosion::create();
@@ -352,17 +366,21 @@ void MainScene::GameFinish()
     menu->setPosition(Point(winSize.width/2.0, winSize.height/3));
 
     this->addChild(menu, ZORDER_MENU);
-    
+
+#ifndef __MUTE_ON__
     //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("clear.caf", false);
     //CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
-
+#endif
+    
 }
 
 void MainScene::onEnterTransitionDidFinish()
 {
     Layer::onEnterTransitionDidFinish();
-    
+
+#ifndef __MUTE_ON__
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("main.caf", true);
     CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+#endif
     
 }
